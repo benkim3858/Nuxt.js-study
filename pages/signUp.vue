@@ -62,6 +62,7 @@ export default {
             // 객체를 담아서 요청을 보냄 , 프로미스를 리턴받는 형태이기 때문에 try,catch를 사용해줘야 한다.
             try {
                 await this.$axios.post("/user/sign_up", this.user_info);
+                this.$router.push('/')
             } catch (e) {}
         },
     },

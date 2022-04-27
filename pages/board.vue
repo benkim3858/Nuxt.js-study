@@ -3,7 +3,6 @@
         <v-col cols="12" sm="8" md="6">
             <v-card class="logo py-4 d-flex justify-center">
                 <NuxtLogo />
-                <VuetifyLogo />
             </v-card>
             <v-card>
                 <v-card-title class="headline">
@@ -16,32 +15,7 @@
                         developers to create amazing applications.
                     </p>
                 </v-card-text>
-                <v-card-title class="headline" v-if="!is_login"> Sign In </v-card-title>
-                <v-card-title v-if="is_login"> Hello! {{user}} </v-card-title>
-                <div>
-                    
-                    <v-text-field
-                        label="Email"
-                        :rules="rules"
-                        hide-details="auto"
-                        v-model="user_info.email"
-                        v-if="!is_login"
-                    ></v-text-field>
-                    <v-text-field
-                        :rules="rules"
-                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                        :type="show1 ? 'text' : 'password'"
-                        @click:append="show1 = !show1"
-                        label="Password"
-                        v-model="user_info.password"
-                        v-if="!is_login"
-                    ></v-text-field>
-                </div>
-                <v-card-actions>
-                    <v-spacer />
-                    <v-btn color="primary" nuxt to="/signUp" v-if="!is_login"> Sign Up </v-btn>
-                    <v-btn color="blue" @click="sign_in" v-if="!is_login"> Sign In </v-btn>
-                </v-card-actions>
+                
             </v-card>
         </v-col>
     </v-row>
@@ -58,19 +32,12 @@ export default {
             ],
 
             show1: false,
-            is_login: false,
 
             user_info: {
                 email: "",
                 password: "",
             },
         };
-    },
-
-    computed: {
-        user() {
-            return this.$store.state.user;
-        }
     },
 
     mounted() {
@@ -89,13 +56,11 @@ export default {
             try {
                 let res = await this.$axios.post("/user/sign_in", this.user_info);
                 console.log(res)
-                this.$store.commit('login', res.data.result);
-                this.is_login = true
+                // if(res.result) {
+                //     alert("Hi!")
+                // }
                 console.log("로그인 성공")
-                console.log(this.$store)
-            } catch (e) {
-                alert("No!!")
-            }
+            } catch (e) {}
         },
     },
 };

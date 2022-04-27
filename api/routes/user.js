@@ -8,6 +8,7 @@ router.post('/sign_up', async function(req, res, next){ // 콜백에 req, res, n
     // 구조 분해 할당
     const {email, password, name, phone} = req.body;
     try {
+
         await users.create({
             email,
             password,
@@ -31,7 +32,7 @@ router.post('/sign_in', async function(req, res, next){
             }
         })
         if(result) {
-            return res.status(200).json({ result: true});
+            return res.status(200).json({ result });
         } else {
             throw new Error('Not Found User');
         }
@@ -39,6 +40,7 @@ router.post('/sign_in', async function(req, res, next){
         return next(e);
     }
 })
+
 
 // 라우터를 작성한 후 익스포트를 밖으로 내보내줘야 app.js에서 불러들였을때 이런 설정 내용들을 읽을수 있다.
 module.exports = router;

@@ -106,7 +106,17 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Sign Up',
           to: '/signUp'
-        }
+        },
+        {
+          icon: 'mdi-border-all',
+          title: 'Board',
+          to: '/board'
+        },
+        {
+          icon: 'mdi-grease-pencil',
+          title: 'Write',
+          to: '/write'
+        },
       ],
       miniVariant: false,
       right: true,
