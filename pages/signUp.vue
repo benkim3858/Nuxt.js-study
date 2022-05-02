@@ -16,6 +16,7 @@
                         :type="show1 ? 'text' : 'password'"
                         @click:append="show1 = !show1"
                         label="Password"
+                        v-model="user_info.password"
                     ></v-text-field>
                 <v-text-field
                     :rules="rules"

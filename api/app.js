@@ -23,6 +23,13 @@ sequelize.sync({alter : true}).then(() => console.log(" DB SYNC SUCCESS"))
 app.use('/', require('./routes'));
 app.use('/user', require('./routes/user'));
 
+// 에러 핸들러
+app.use(function (err, req, res, next){
+    console.error(err);
+    res.status(500).send('Something broken!');
+})
+
+
 // http 서버로서의 역할을 먼저 하는지 테스트 하기 위해 라우터를 먼저 작성 한다.
 // 디비 연결은 그 이후에 (진성씨는 그렇게 한다.)
 module.exports = {

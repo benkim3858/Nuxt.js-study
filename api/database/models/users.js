@@ -26,7 +26,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING, 
         allowNull: true,
         comment: "전화번호"
-    }
+    },
+    salt_key : {
+        type: DataTypes.STRING, 
+        allowNull: false,
+        comment: "비밀번호 솔트 키"
+    },
   }, {
     paranoid : true
   });

@@ -6,16 +6,14 @@
             </v-card>
             <v-card>
                 <v-card-title class="headline">
-                    Welcome to the Vuetify + Nuxt.js Study Project
+                    Welcome! This is Board practice!
                 </v-card-title>
-                <v-card-text>
-                    <p>
-                        Vuetify is a progressive Material Design component
-                        framework for Vue.js. It was designed to empower
-                        developers to create amazing applications.
-                    </p>
+                <v-card-text v-for="(board, index) in board_list" :key="index">
+                    {{ board.content }}
+                    <v-btn fab small dark @click="delete_board(board.id, index)">
+                        <v-icon>mdi-close-circle</v-icon>
+                    </v-btn>
                 </v-card-text>
-                
             </v-card>
         </v-col>
     </v-row>
@@ -23,45 +21,45 @@
 
 <script>
 export default {
-    name: "IndexPage",
+    name: "BoardPage",
     data() {
         return {
-            rules: [
-                (value) => !!value || "Required.",
-                (value) => (value && value.length >= 3) || "Min 3 characters",
-            ],
-
             show1: false,
-
-            user_info: {
-                email: "",
-                password: "",
+            board: {
+                content: "",
             },
+            board_list: [],
         };
     },
 
     mounted() {
         // this.test()
         // this.sign_up()
+        this.get_board();
     },
 
     methods: {
-        async test() {
-            await this.$axios.post("/api");
-        },
-
-        async sign_in() {
-            console.log("로그인 요청 감?");
-            // 객체를 담아서 요청을 보냄 , 프로미스를 리턴받는 형태이기 때문에 try,catch를 사용해줘야 한다.
+        async get_board() {
+            let user_id = this.$store.state.user_id;
             try {
-                let res = await this.$axios.post("/user/sign_in", this.user_info);
-                console.log(res)
-                // if(res.result) {
-                //     alert("Hi!")
-                // }
-                console.log("로그인 성공")
+                let res = await this.$axios.get(`/user/board/${user_id}`);
+                console.log(res);
+                this.board_list = res.data.result;
+                //    this.board = res.res.data;
             } catch (e) {}
         },
+
+        async delete_board(board_id, index) {
+            console.log(board_id);
+            
+            try {
+                await this.$axios.delete(`/user/board/${board_id}`);
+                this.board_list.splice(index, 1);
+            } catch (e) {
+                
+            }
+            
+        }
     },
 };
 </script>

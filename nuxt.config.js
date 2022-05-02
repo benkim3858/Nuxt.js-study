@@ -25,6 +25,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    {src: '~/plugins/store_persistedstate.js', mode : 'client'},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -46,6 +47,11 @@ export default {
    axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/api'
+  },
+
+  router: {
+    // Run the middleware/user-agent.js on every page
+    middleware: 'is_user'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -70,6 +76,8 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
+
+  ssr : false,
 
   server: {
     port: 3000, // default: 3000

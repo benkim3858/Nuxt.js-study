@@ -16,7 +16,7 @@
                         developers to create amazing applications.
                     </p>
                 </v-card-text>
-                <v-card-title class="headline" v-if="!is_login"> Sign In </v-card-title>
+                <v-card-title class="headline" v-if="!user"> Sign In </v-card-title>
                 <v-card-title v-if="is_login"> Hello! {{user}} </v-card-title>
                 <div>
                     
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
     name: "IndexPage",
     data() {
@@ -58,7 +59,7 @@ export default {
             ],
 
             show1: false,
-            is_login: false,
+
 
             user_info: {
                 email: "",
@@ -68,9 +69,10 @@ export default {
     },
 
     computed: {
-        user() {
-            return this.$store.state.user;
-        }
+        // user() {
+        //     return this.$store.state.user;
+        // },
+        ...mapState(['user', 'is_login'])
     },
 
     mounted() {
@@ -88,15 +90,18 @@ export default {
             // 객체를 담아서 요청을 보냄 , 프로미스를 리턴받는 형태이기 때문에 try,catch를 사용해줘야 한다.
             try {
                 let res = await this.$axios.post("/user/sign_in", this.user_info);
-                console.log(res)
+                console.log(res);
                 this.$store.commit('login', res.data.result);
-                this.is_login = true
-                console.log("로그인 성공")
-                console.log(this.$store)
+                if (this.$store.state.is_login) {
+                    console.log("로그인 성공");
+                    console.log(this.$store);
+                }
             } catch (e) {
-                alert("No!!")
+                alert("No!!");
             }
         },
+
+        
     },
 };
 </script>
