@@ -12,6 +12,10 @@ export const state = () => ({
     is_login: false,
     user : '',
     user_id : '',
+    token: {
+        access_token: '',
+        refresh_token: '',
+    },
   })
   
 export const mutations = {

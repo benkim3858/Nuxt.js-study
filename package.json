@@ -13,6 +13,7 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "core-js": "^3.19.3",
     "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
     "nuxt": "^2.15.8",
     "sequelize": "^6.19.0",

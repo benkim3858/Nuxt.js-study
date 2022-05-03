@@ -32,8 +32,26 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         comment: "비밀번호 솔트 키"
     },
+    access_token : {
+        type: DataTypes.STRING, 
+        allowNull: true,
+        comment: "바로 전 엑세스 토큰"
+    },
+    refresh_token : {
+        type: DataTypes.STRING, 
+        allowNull: true,
+        comment: "리프레쉬 토큰"
+    },
   }, {
     paranoid : true
   });
+  users.associate = function(models) {
+    // associations can be defined here
+    
+    users.hasMany(models.users_token, {
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE'
+    })
+  };
   return users;
 };

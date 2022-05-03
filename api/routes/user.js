@@ -3,8 +3,9 @@ const router = Router();
 const { Op } = require("sequelize");
 
 // 모델 불러오기
-const {users,board} = require('../database/models');
+const {users,board,users_token} = require('../database/models');
 import security from '../utils/security'
+import jwt_utils from '../utils/jwt_utils'
 
 
 router.post('/sign_up', async function(req, res, next){ // 콜백에 req, res, next
@@ -31,7 +32,7 @@ router.post('/sign_up', async function(req, res, next){ // 콜백에 req, res, n
 });
 
 router.post('/sign_in', async function(req, res, next){
-    const {email} = req.body;
+    const {email, automation} = req.body;
     try {
         const result = await users.findOne({
             where: {
@@ -50,6 +51,19 @@ router.post('/sign_in', async function(req, res, next){
             if (password != result.password) {
                 throw new Error('Not Found User');
             }
+        
+
+        const token = jwt_utils.create_token({id: users.id, name: users.name, email: users.email, automation });
+        const ip_address = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        console.log(ip_address); // ip address of the user
+        await users_token.create({
+            access_token: token.access_token, 
+            refresh_token: token.refresh_token,
+            automation,
+            ip_address,
+            user_id : users.id,
+        })
+
         return res.status(200).json({ result });
     } catch (e) {
         return next(e);
@@ -97,6 +111,8 @@ router.delete('/board/:board_id', async function(req, res, next){
         return next(e);
     }
 })
+
+
 
 
 // 라우터를 작성한 후 익스포트를 밖으로 내보내줘야 app.js에서 불러들였을때 이런 설정 내용들을 읽을수 있다.
