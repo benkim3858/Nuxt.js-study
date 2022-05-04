@@ -76,7 +76,7 @@ export default {
     },
 
     mounted() {
-        // this.test()
+        // this.test_token()
         // this.sign_up()
     },
 
@@ -91,7 +91,7 @@ export default {
             try {
                 let res = await this.$axios.post("/user/sign_in", this.user_info);
                 console.log(res);
-                this.$store.commit('login', res.data.result);
+                this.$store.commit('login', res.data);
                 if (this.$store.state.is_login) {
                     console.log("로그인 성공");
                     console.log(this.$store);
@@ -101,7 +101,17 @@ export default {
             }
         },
 
-        
+        // async test_token() {
+        //     try {
+        //         await this.$axios.post('/user/test_token_check',null, {
+        //             headers: {
+        //                 'x-access-token' : 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidXNlcnMiLCJpYXQiOjE2NTE1NjIyMDgsImV4cCI6MTY1MTU2MzEwOH0.8SLCSS3KVssf8GYK7idNn1WAOO8KH2-0_qKhZhM_vAOUlqUAHEgZ11lQNZ_s0PbHWT2CtfL-oGPehcQLCEmS9Q'
+        //             }
+        //         })
+        //     } catch (error) {
+                
+        //     }
+        // }        
     },
 };
 </script>

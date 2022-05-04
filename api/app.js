@@ -1,5 +1,6 @@
 // 호출하기 전에 임의로 지정한 환경변수를 먼저 불러 온다 (진성씨 스타일)
 require('./config/app.env.js');
+// import jwt_util from './utils/jwt_utils.js';
 
 const { sequelize } = require('./database/models'); // 시퀄라이즈 코드 호출
 

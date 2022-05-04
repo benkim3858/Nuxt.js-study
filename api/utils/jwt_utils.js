@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const secret_key = process.env.SECRET_KEY;
+const {users,board,users_token} = require('../database/models');
 const jwt_utils = {};
 
 jwt_utils.token_check = function(req, res, next) {
@@ -71,25 +72,51 @@ jwt_utils.refresh_token = async function(req, res, next) {
     }
 
     try {
-        const access_token_decoded = jwt.verify(req.headers['x-access-token'], secret_key);
+        const access_token_decoded = jwt.verify(access_token, secret_key);
         res.status(201).send({token : {
             refresh_token,
             access_token,
-        },role : access_token_decoded.role});
+        }, access_token_decoded});
         return;
     } catch (e) {
         console.log("access_token 만료 ");
         console.log("refresh 체크 시작 ");
         try {
             const refresh_token_decoded = jwt.verify(refresh_token, secret_key)
-
-            let user_token = await user_token.findOne({
+            let user_token = await users_token.findOne({
                 where : {
-                    email : refresh_token_decoded.id,
+                    user_id : refresh_token_decoded.id,
+                    refresh_token,
                 }
             })
+            if(!user_token) {
+                res.status(401).send('not found user');
+                return;
+            }
+            if(user_token.access_token != access_token) {
+                res.status(401).send('TOKEN FORGERY');
+                return;
+            }
+
+            const token = jwt_utils.create_token({
+                id : refresh_token_decoded.id,
+                automation : user_token.automation,
+            });
+
+            user_token.refresh_token = token.refresh_token;
+            user_token.access_token = token.access_token;
+            user_token.save();
+
+            res.status(201).send(token);
+            return
+
         } catch (e) {
-            
+            let user_token = await users_token.destory({
+                where : {
+                    refresh_token
+                }
+            })
+            res.status(401).send('REFRESH TOKEN IS EXPIRED');
         }
     }
 }

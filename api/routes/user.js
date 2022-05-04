@@ -34,43 +34,82 @@ router.post('/sign_up', async function(req, res, next){ // 콜백에 req, res, n
 router.post('/sign_in', async function(req, res, next){
     const {email, automation} = req.body;
     try {
-        const result = await users.findOne({
+        const user = await users.findOne({
             where: {
                 email,
-            }
+                
+            },
+            attributes: {exclude: ['access_token', 'refresh_token',]}
         })
 
-        // console.log('db pass : '+result.password)
-        // console.log('req pass : '+req.body.password)
-        // console.log('db salt : '+result.salt)
-        // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+        if(!user) {
+            throw new Error('CANNOT FOUND USER')
+        }
 
-        const { password } = await security.pbkdf2Async(result.salt_key, req.body.password);
-        // console.log(password);
-        // console.log(result.password);
-            if (password != result.password) {
-                throw new Error('Not Found User');
-            }
+        const { password } = await security.pbkdf2Async(user.salt_key, req.body.password);
+
+        if (password != user.password) {
+            throw new Error('Wrong Password');
+        }
         
-
-        const token = jwt_utils.create_token({id: users.id, name: users.name, email: users.email, automation });
+        const token = jwt_utils.create_token({id: user.id, name: user.name, email: user.email, automation });
         const ip_address = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         console.log(ip_address); // ip address of the user
-        await users_token.create({
-            access_token: token.access_token, 
-            refresh_token: token.refresh_token,
-            automation,
-            ip_address,
-            user_id : users.id,
+
+        const user_token = await users_token.findOne({
+            where: {
+                user_id : user.id,
+            }
         })
 
-        return res.status(200).json({ result });
+        if(user_token) {
+            await users_token.update({
+                access_token: token.access_token, 
+                refresh_token: token.refresh_token,
+            },{
+                where: {
+                    user_id : user.id,
+                }
+            })
+        } else {
+            await users_token.create({
+                access_token: token.access_token, 
+                refresh_token: token.refresh_token,
+                automation,
+                ip_address,
+                user_id : user.id,
+            })
+        }
+
+        const data = {
+            id: user.id,
+            name: user.name,
+            access_token: token.access_token,
+            refresh_token: token.refresh_token,
+        }
+
+        return res.status(200).json(data);
     } catch (e) {
         return next(e);
     }
 });
 
-router.post('/board_upload', async function(req, res, next){
+router.post('/logout', async function(req, res, next){
+    try {
+        const logout_result = users_token.destroy({
+            where: {
+                refresh_token : req.body.refresh_token
+            }
+        })
+        console.log(logout_result);
+        return res.status(200).end()
+    } catch (e) {
+        console.log(e);
+        return next(e);
+    }
+})
+
+router.post('/board_upload', jwt_utils.token_check, async function(req, res, next){
     const {content, user_id} = req.body;
     try {
         await board.create({
@@ -83,7 +122,7 @@ router.post('/board_upload', async function(req, res, next){
     }
 });
 
-router.get('/board/:user_id', async function(req, res, next){
+router.get('/board/:user_id', jwt_utils.token_check, async function(req, res, next){
     const {user_id} = req.params;
     console.log(user_id);
     try {
@@ -98,7 +137,7 @@ router.get('/board/:user_id', async function(req, res, next){
     }
 })
 
-router.delete('/board/:board_id', async function(req, res, next){
+router.delete('/board/:board_id', jwt_utils.token_check, async function(req, res, next){
     const {board_id} = req.params;
     try {
         const result = await board.destroy({
@@ -111,6 +150,13 @@ router.delete('/board/:board_id', async function(req, res, next){
         return next(e);
     }
 })
+
+router.post('/test_token_check', jwt_utils.token_check, async function(req, res, next){
+    console.log(jwt_utils.token_check)
+    
+    return res.end()
+})
+
 
 
 

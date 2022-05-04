@@ -12,6 +12,7 @@ export const state = () => ({
     is_login: false,
     user : '',
     user_id : '',
+    role : '',
     token: {
         access_token: '',
         refresh_token: '',
@@ -26,10 +27,38 @@ export const mutations = {
         state.is_login = true;
         state.user = res.name;
         state.user_id = res.id;
+        state.token.access_token = res.access_token;
+        state.token.refresh_token = res.refresh_token;
         console.log(this.state);
+    },
+    set_token(state, payload) {
+        console.log("SET TOKEN");
+        console.log(payload);
+        state.token.access_token = payload.access_token;
+        state.token.refresh_token = payload.refresh_token;
+        state.is_login = true;
+        // state.role = payload.role;
+    },
+    reset_token(state) {
+        console.log('RESET TOKEN');
+        state.token.access_token = '';
+        state.token.refresh_token = '';
+        state.is_login = false;
+        // state.role = '';
+    },
+    clear_token(state) {
+        console.log('CLEAR_TOKEN');
+        state.token.access_token = '';
+        state.token.refresh_token = '';
+        state.is_login = false;
+        // state.role = '';
     },
     logout(state) {
         state.is_login = false;
+        state.token.access_token = '';
+        state.token.refresh_token = '';
+        state.is_login = false;
+        // state.role = '';
     }
   }
   
