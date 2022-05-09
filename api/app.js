@@ -23,6 +23,7 @@ sequelize.sync({alter : true}).then(() => console.log(" DB SYNC SUCCESS"))
 // 라우터 파일을 참조하기 위헤 
 app.use('/', require('./routes'));
 app.use('/user', require('./routes/user'));
+app.use('/video', require('./routes/video'));
 
 // 에러 핸들러
 app.use(function (err, req, res, next){

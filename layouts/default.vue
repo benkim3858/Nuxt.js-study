@@ -100,6 +100,11 @@ export default {
                     title: "Write",
                     to: "/write",
                 },
+                {
+                    icon: "mdi-video",
+                    title: "Video",
+                    to: "/video",
+                },
             ],
             miniVariant: false,
             right: true,

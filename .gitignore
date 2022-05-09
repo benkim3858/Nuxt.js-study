@@ -38,6 +38,8 @@ build/Release
 node_modules/
 jspm_packages/
 
+api/config/*.pem
+
 # TypeScript v1 declaration files
 typings/
 
