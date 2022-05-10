@@ -5,7 +5,7 @@ const {configPath} = process.env;
 module.exports = {
     get : function() {
         const option = {
-            keypairId : 'K3QHG7XURKHXZ4',
+            keypairId : 'KA8CHHCIG183O',
             privateKeyPath : path.join(configPath, 'private_key.pem'),
             expireTime : new Date(2022, 12, 31)
         }
@@ -16,7 +16,7 @@ module.exports = {
     },
     create : function(url) {
         const options = {
-            keypairId : 'K3QHG7XURKHXZ4',
+            keypairId : 'KA8CHHCIG183O',
             privateKeyPath: path.join(configPath, 'private_key.pem'),
             expireTime : Date.now() + 2 * 60 * 60 * 1000 
         }
