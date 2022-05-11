@@ -10,7 +10,12 @@
                 </v-card-title>
                 <v-card-text v-for="(board, index) in board_list" :key="index">
                     {{ board.content }}
-                    <v-btn fab small dark @click="delete_board(board.id, index)">
+                    <v-btn
+                        fab
+                        small
+                        dark
+                        @click="delete_board(board.id, index)"
+                    >
                         <v-icon>mdi-close-circle</v-icon>
                     </v-btn>
                 </v-card-text>
@@ -21,12 +26,12 @@
 
 <script>
 export default {
-    name: "BoardPage",
+    name: 'BoardPage',
     data() {
         return {
             show1: false,
             board: {
-                content: "",
+                content: '',
             },
             board_list: [],
         };
@@ -51,15 +56,12 @@ export default {
 
         async delete_board(board_id, index) {
             console.log(board_id);
-            
+
             try {
                 await this.$axios.delete(`/user/board/${board_id}`);
                 this.board_list.splice(index, 1);
-            } catch (e) {
-                
-            }
-            
-        }
+            } catch (e) {}
+        },
     },
 };
 </script>

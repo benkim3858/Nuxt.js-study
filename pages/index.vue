@@ -16,10 +16,11 @@
                         developers to create amazing applications.
                     </p>
                 </v-card-text>
-                <v-card-title class="headline" v-if="!user"> Sign In </v-card-title>
-                <v-card-title v-if="is_login"> Hello! {{user}} </v-card-title>
+                <v-card-title class="headline" v-if="!user">
+                    Sign In
+                </v-card-title>
+                <v-card-title v-if="is_login"> Hello! {{ user }} </v-card-title>
                 <div>
-                    
                     <v-text-field
                         label="Email"
                         :rules="rules"
@@ -39,8 +40,12 @@
                 </div>
                 <v-card-actions>
                     <v-spacer />
-                    <v-btn color="primary" nuxt to="/signUp" v-if="!is_login"> Sign Up </v-btn>
-                    <v-btn color="blue" @click="sign_in" v-if="!is_login"> Sign In </v-btn>
+                    <v-btn color="primary" nuxt to="/signUp" v-if="!is_login">
+                        Sign Up
+                    </v-btn>
+                    <v-btn color="blue" @click="sign_in" v-if="!is_login">
+                        Sign In
+                    </v-btn>
                 </v-card-actions>
             </v-card>
         </v-col>
@@ -50,20 +55,19 @@
 <script>
 import { mapState } from 'vuex';
 export default {
-    name: "IndexPage",
+    name: 'IndexPage',
     data() {
         return {
             rules: [
-                (value) => !!value || "Required.",
-                (value) => (value && value.length >= 3) || "Min 3 characters",
+                (value) => !!value || 'Required.',
+                (value) => (value && value.length >= 3) || 'Min 3 characters',
             ],
 
             show1: false,
 
-
             user_info: {
-                email: "",
-                password: "",
+                email: '',
+                password: '',
             },
         };
     },
@@ -72,7 +76,7 @@ export default {
         // user() {
         //     return this.$store.state.user;
         // },
-        ...mapState(['user', 'is_login'])
+        ...mapState(['user', 'is_login']),
     },
 
     mounted() {
@@ -82,22 +86,25 @@ export default {
 
     methods: {
         async test() {
-            await this.$axios.post("/api");
+            await this.$axios.post('/api');
         },
 
         async sign_in() {
-            console.log("로그인 요청 감?");
+            console.log('로그인 요청 감?');
             // 객체를 담아서 요청을 보냄 , 프로미스를 리턴받는 형태이기 때문에 try,catch를 사용해줘야 한다.
             try {
-                let res = await this.$axios.post("/user/sign_in", this.user_info);
+                let res = await this.$axios.post(
+                    '/user/sign_in',
+                    this.user_info
+                );
                 console.log(res);
                 this.$store.commit('login', res.data);
                 if (this.$store.state.is_login) {
-                    console.log("로그인 성공");
+                    console.log('로그인 성공');
                     console.log(this.$store);
                 }
             } catch (e) {
-                alert("No!!");
+                alert('No!!');
             }
         },
 
@@ -109,9 +116,9 @@ export default {
         //             }
         //         })
         //     } catch (error) {
-                
+
         //     }
-        // }        
+        // }
     },
 };
 </script>
