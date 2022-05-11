@@ -1,11 +1,17 @@
 <template>
     <div>
+        <!-- HLS.JS -->
+        <!-- <video ref="video" width="100%" height="640" controls></video> -->
+
+
+        <!-- VIDEO.JS -->
         <video-player :options="videoOptions" class="vjs-big-play-button vjs-big-play-centered" />
         {{ this.videoOptions.sources[0].src}}
     </div>
 </template>
 
 <script>
+import Hls from 'hls.js';
 
 export default {
     data() {
@@ -27,7 +33,14 @@ export default {
         };
     },
     mounted() {
-        
+        // let hls = new Hls();
+        // let stream = "/api/video/streaming/test2/main_1080p30.m3u8";
+        // let video = this.$refs['video'];
+        // hls.loadSource(stream);
+        // hls.attachMedia(video);
+        // hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        //     video.play();
+        // });
     },
     methods: {
         

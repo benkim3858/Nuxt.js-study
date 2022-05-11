@@ -102,8 +102,13 @@ export default {
                 },
                 {
                     icon: "mdi-video",
-                    title: "Video",
+                    title: "Video.js Player",
                     to: "/video",
+                },
+                {
+                    icon: "mdi-video",
+                    title: "HLS.js player",
+                    to: "/hls",
                 },
             ],
             miniVariant: false,
