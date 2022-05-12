@@ -25,7 +25,8 @@ export default {
     data() {
         return {
             write: {
-                content:''
+                title: '',
+                content: '',
             }
         }
     },

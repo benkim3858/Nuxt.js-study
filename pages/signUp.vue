@@ -6,18 +6,19 @@
             <div>
                 <v-text-field
                     label="Email"
-                    :rules="rules"
                     hide-details="auto"
                     v-model="user_info.email"
+                    :rules="rules"
                 ></v-text-field>
+
                 <v-text-field
-                        :rules="rules"
-                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                        :type="show1 ? 'text' : 'password'"
-                        @click:append="show1 = !show1"
-                        label="Password"
-                        v-model="user_info.password"
-                    ></v-text-field>
+                    :rules="rules"
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="show1 ? 'text' : 'password'"
+                    @click:append="show1 = !show1"
+                    label="Password"
+                    v-model="user_info.password"
+                ></v-text-field>
                 <v-text-field
                     :rules="rules"
                     label="Name"
@@ -39,7 +40,7 @@
 
 <script>
 export default {
-    name: "InspirePage",
+    name: 'InspirePage',
     data() {
         return {
             rules: [
@@ -50,24 +51,24 @@ export default {
             show1: false,
 
             user_info: {
-                email: "",
-                password: "",
-                name: "",
-                phone: "",
+                email: '',
+                password: '',
+                name: '',
+                phone: '',
             },
         };
     },
     methods: {
         async sign_up() {
-            console.log("요청 감?");
+            console.log('요청 감?');
             // 객체를 담아서 요청을 보냄 , 프로미스를 리턴받는 형태이기 때문에 try,catch를 사용해줘야 한다.
             try {
-                await this.$axios.post("/user/sign_up", this.user_info ,{
+                await this.$axios.post('/user/sign_up', this.user_info, {
                     headres: {
                         'Content-Type': '',
-                    }
+                    },
                 });
-                this.$router.push('/')
+                this.$router.push('/');
             } catch (e) {}
         },
     },
