@@ -21,11 +21,16 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/node_modules/video.js/dist/video-js.css'
+    '~/node_modules/video.js/dist/video-js.css',
+    '~assets/scss/common.scss',
   ],
+  styleResources: {
+    less: '~/assets/scss/*.scss'
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    {src: '~/plugins/validate.js'},
     {src: '~/plugins/store_persistedstate.js', mode : 'client'},
     {src: '~/plugins/axios.js', mode: 'client'},
   ],
@@ -43,6 +48,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
       '@nuxtjs/axios',
+      '@nuxtjs/style-resources',
   ],
 
    // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -77,6 +83,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+      
   },
 
   ssr : false,

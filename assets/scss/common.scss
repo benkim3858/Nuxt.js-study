@@ -1,0 +1,17 @@
+///////////////////// INPUT ///////////////////////
+.nonproper{
+	input:focus{border: 1px solid #C22B2B;}
+	b{
+		color: #C22B2B;
+		font-size: 10px;
+		display: inline;
+	}
+}
+
+.proper{
+	input{border: 1px solid #D9DADE;}
+	b{
+		font-size: 10px;
+		display: none;
+	}
+}
