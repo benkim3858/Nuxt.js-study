@@ -100,8 +100,8 @@ export default {
                     liveDurationInfinity: true,
                     highBufferWatchdogPeriod: 1,
                     lowLatencyMode: true,
-                    fLoader,
-                    pLoader,
+                    // fLoader,
+                    // pLoader,
                 };
                 const videoEventHandlers = {
                     // hls api 문서에 명시 되어있는 이벤트

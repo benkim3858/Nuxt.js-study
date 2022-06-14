@@ -22,6 +22,7 @@
     "sass": "^1.51.0",
     "sass-loader": "^10.2.1",
     "sequelize": "^6.19.0",
+    "talkjs": "^0.15.5",
     "vee-validate": "^3.4.14",
     "video.js": "^7.18.1",
     "vue": "^2.6.14",
