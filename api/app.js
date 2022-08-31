@@ -8,7 +8,7 @@ const express = require('express'); //express 모듈 불러옴
 const app = express(); // http 서버 생성 (express 함수를 호출함으로써 결과를 app에 담고 http 서버를 생성)
 
 // 제이슨 형태로 파라미터가 들어왔을때 그 내용들을 req body에다가 저장을 해줌. 그래서 req.body를 사용할 수 있게 되는 것
-app.use(express.json({ limit: '300mb' }));
+app.use(express.json({ limit: '300mb' })); // 서버가 한번에 요청받을수 있는 사이즈
 
 // 접속 하는 코드
 sequelize.authenticate().then(() => console.log('Connection has been established successfully.'))

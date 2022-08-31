@@ -29,7 +29,7 @@
             <v-btn icon @click.stop="miniVariant = !miniVariant">
                 <v-icon
                     >mdi-{{
-                        `chevron-${miniVariant ? "right" : "left"}`
+                        `chevron-${miniVariant ? 'right' : 'left'}`
                     }}</v-icon
                 >
             </v-btn>
@@ -73,7 +73,7 @@
 
 <script>
 export default {
-    name: "DefaultLayout",
+    name: 'DefaultLayout',
     data() {
         return {
             clipped: false,
@@ -81,40 +81,45 @@ export default {
             fixed: false,
             items: [
                 {
-                    icon: "mdi-apps",
-                    title: "Welcome",
-                    to: "/",
+                    icon: 'mdi-apps',
+                    title: 'Welcome',
+                    to: '/',
                 },
                 {
-                    icon: "mdi-chart-bubble",
-                    title: "Sign Up",
-                    to: "/signUp",
+                    icon: 'mdi-chart-bubble',
+                    title: 'Sign Up',
+                    to: '/signUp',
                 },
                 {
-                    icon: "mdi-border-all",
-                    title: "Board",
-                    to: "/board",
+                    icon: 'mdi-border-all',
+                    title: 'Board',
+                    to: '/board',
                 },
                 {
-                    icon: "mdi-grease-pencil",
-                    title: "Write",
-                    to: "/write",
+                    icon: 'mdi-grease-pencil',
+                    title: 'Write',
+                    to: '/write',
                 },
                 {
-                    icon: "mdi-video",
-                    title: "Video.js Player",
-                    to: "/video",
+                    icon: 'mdi-video',
+                    title: 'Video.js Player',
+                    to: '/video',
                 },
                 {
-                    icon: "mdi-video",
-                    title: "HLS.js player",
-                    to: "/hls",
+                    icon: 'mdi-video',
+                    title: 'HLS.js player',
+                    to: '/hls',
+                },
+                {
+                    icon: 'mdi-upload',
+                    title: 'Excel Upload',
+                    to: '/excel_upload',
                 },
             ],
             miniVariant: false,
             right: true,
             rightDrawer: false,
-            title: "Vuetify.js",
+            title: 'Vuetify.js',
         };
     },
     methods: {
