@@ -111,6 +111,11 @@ export default {
                     to: '/hls',
                 },
                 {
+                    icon: 'mdi-border-all',
+                    title: 'File Board',
+                    to: '/file_board',
+                },
+                {
                     icon: 'mdi-upload',
                     title: 'Excel Upload',
                     to: '/excel_upload',

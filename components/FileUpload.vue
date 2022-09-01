@@ -6,7 +6,7 @@
                     type="file"
                     ref="uploader"
                     style="display: none"
-                    @change="file_upload($refs.uploader.files)"
+                    @change="file_upload($refs.uploader.files[0])"
                 />
                 <button class="x_btn mrl" @click="$emit('close')">X</button>
 
@@ -14,19 +14,10 @@
 
                 <div class="img_boxA"></div>
 
-                <div
-                    class="fileupbox"
-                    style="white-space: break-spaces; overflow: scroll"
-                    v-if="files.length > 0"
-                >
-                    {{ files[0] }}
-                </div>
-
                 <div class="btnBox">
                     <button class="mainBtn2" @click="on_click_upload()">
                         파일 선택
                     </button>
-                    <button class="mainBtn1">업로드 하기</button>
                 </div>
             </div>
         </v-dialog>
@@ -34,6 +25,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
     props: {
         show_modal: {
@@ -48,20 +40,21 @@ export default {
         };
     },
 
-    mounted() {},
+    mounted() {
+        console.log(this.$store);
+    },
 
     methods: {
-        emit_method() {
-            this.$emit('close');
-        },
+        ...mapActions(['file/append_file']),
+
         on_click_upload() {
             this.$refs.uploader.click();
-            console.log(this.$refs.uploader.files);
         },
+
         file_upload(file) {
-            this.files.push(file);
-            console.log(this.$refs.uploader.files);
-            console.log(this.files[0].file);
+            // this.$store.dispatch('file/append_file', file);
+            this.$store.commit('file/upload', file);
+            this.$emit('close');
         },
     },
 };

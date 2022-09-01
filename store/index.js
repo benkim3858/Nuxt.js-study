@@ -8,20 +8,20 @@
 // })];
 
 export const state = () => ({
-    hello : 'hello',
+    hello: 'hello',
     is_login: false,
-    user : '',
-    user_id : '',
-    role : '',
+    user: '',
+    user_id: '',
+    role: '',
     token: {
         access_token: '',
         refresh_token: '',
     },
-  })
-  
+});
+
 export const mutations = {
     bye(state) {
-      state.hello = 'goodbye';
+        state.hello = 'goodbye';
     },
     login(state, res) {
         state.is_login = true;
@@ -32,7 +32,7 @@ export const mutations = {
         console.log(this.state);
     },
     set_token(state, payload) {
-        console.log("SET TOKEN");
+        console.log('SET TOKEN');
         console.log(payload);
         state.token.access_token = payload.access_token;
         state.token.refresh_token = payload.refresh_token;
@@ -59,17 +59,16 @@ export const mutations = {
         state.token.refresh_token = '';
         state.is_login = false;
         // state.role = '';
-    }
-  }
-  
+    },
+};
+
 /**
  * actions 에서 받을 수 있는 parameter
  * commit, dispatch, getters, state, rootGetters, rootState
  */
 export const actions = {
-    user_logout({commit}) {
+    user_logout({ commit }) {
         commit('logout');
         this.$router.push('/');
-    }
-}
-
+    },
+};
