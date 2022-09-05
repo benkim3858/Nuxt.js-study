@@ -41,18 +41,18 @@ export default {
         async file_upload() {
             try {
                 this.file = this.$store.state.file.file;
-                console.log(this.file);
+                console.log(this.file.name);
                 const form_data = new FormData();
-                const axois_option = {
+                const axios_option = {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
                 }
-                form_data.append('file', this.file);
+                form_data.append('files', this.file);
                 console.log(form_data);
 
                 await this.$axios.post('/user/file_upload', form_data, {
-                    axois_option,
+                    axios_option,
                 });
             } catch (e) {
 
